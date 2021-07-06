@@ -3,7 +3,6 @@ import {
   redirectRedditPath,
   parseQueryString,
   notFound,
-  getStoredImage,
   getImageUploadURL,
 } from './Shareddit';
 
@@ -15,7 +14,6 @@ sharedditRouter.get(
   '/r/:sub/comments/:postID/:title/:commentID',
   redirectRedditPath
 );
-sharedditRouter.get('/image/:id', getStoredImage);
 sharedditRouter.get('/getUploadURL/*', getImageUploadURL);
 sharedditRouter.get('/editor/*', parseQueryString);
 

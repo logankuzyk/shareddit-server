@@ -18,10 +18,6 @@ const s3 = new S3({
   useAccelerateEndpoint: true,
 });
 
-export const getImage = async (imageID: string) => {
-  //   const file;
-};
-
 export const generateUploadURL = async (type: string) => {
   const imageName = `images/${uuid.v4()}.${type}`;
 
