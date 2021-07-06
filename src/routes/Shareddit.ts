@@ -24,8 +24,8 @@ export const notFound = async (req: Request, res: Response) => {
 };
 
 export const getImageUploadURL = async (req: Request, res: Response) => {
+  console.log(req.query);
   const query = req.path.substr(14, req.path.length);
-  console.log(query);
   const params = queryString.parse(query);
   let type = params.type;
   if (!type) {
