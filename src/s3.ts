@@ -30,7 +30,7 @@ export const generateUploadURL = async (type: string) => {
     Key: imageName,
     Expires: 60,
     ContentEncoding: 'base64',
-    ContentType: 'image/png',
+    ContentType: `image/${type}`,
   };
 
   return await s3.getSignedUrlPromise('putObject', params);
