@@ -78,7 +78,8 @@
     "snoowrap": "^1.23.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.2",
-    "uniqolor": "^1.0.1"
+    "uniqolor": "^1.0.1",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
@@ -92,6 +93,7 @@
     "@types/node": "^15.6.1",
     "@types/redis": "^2.8.30",
     "@types/supertest": "^2.0.11",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "eslint": "^7.27.0",
