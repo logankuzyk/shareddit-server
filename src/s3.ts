@@ -1,0 +1,36 @@
+import S3 from 'aws-sdk/clients/s3';
+import redis from 'redis';
+
+const dotenv = require('dotenv').config();
+
+const bucketName = process.env.AWS_BUCKET_NAME;
+const region = process.env.AWS_BUCKET_REGION;
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+
+const s3 = new S3({
+  apiVersion: '2006-03-01',
+  region,
+  accessKeyId,
+  secretAccessKey,
+  signatureVersion: 'v4',
+  useAccelerateEndpoint: true,
+});
+
+export const getImage = async (imageID: string) => {
+  //   const file;
+};
+
+export const generateUploadURL = async () => {
+  const imageName = 'images/imageName.png';
+
+  const params = {
+    Bucket: bucketName,
+    Key: imageName,
+    Expires: 60,
+    ContentEncoding: 'base64',
+    ContentType: 'image/png',
+  };
+
+  return await s3.getSignedUrlPromise('putObject', params);
+};

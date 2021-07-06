@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { redirectRedditPath, parseQueryString, notFound } from './Shareddit';
+import {
+  redirectRedditPath,
+  parseQueryString,
+  notFound,
+  getStoredImage,
+  getImageUploadURL,
+} from './Shareddit';
 
 const sharedditRouter = Router();
 
@@ -9,8 +15,9 @@ sharedditRouter.get(
   '/r/:sub/comments/:postID/:title/:commentID',
   redirectRedditPath
 );
-
-sharedditRouter.get('/*', parseQueryString);
+sharedditRouter.get('/image/:id', getStoredImage);
+sharedditRouter.get('/getUploadURL', getImageUploadURL);
+sharedditRouter.get('/editor/*', parseQueryString);
 
 // Export the base-router
 const baseRouter = Router();
