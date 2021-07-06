@@ -1,4 +1,5 @@
 import S3 from 'aws-sdk/clients/s3';
+import uuid from 'uuid';
 import redis from 'redis';
 
 const dotenv = require('dotenv').config();
@@ -21,8 +22,8 @@ export const getImage = async (imageID: string) => {
   //   const file;
 };
 
-export const generateUploadURL = async () => {
-  const imageName = 'images/imageName.png';
+export const generateUploadURL = async (type: string) => {
+  const imageName = `${uuid.v4()}.${type}`;
 
   const params = {
     Bucket: bucketName,

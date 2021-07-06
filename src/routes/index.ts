@@ -16,7 +16,7 @@ sharedditRouter.get(
   redirectRedditPath
 );
 sharedditRouter.get('/image/:id', getStoredImage);
-sharedditRouter.get('/getUploadURL', getImageUploadURL);
+sharedditRouter.get('/getUploadURL/*', getImageUploadURL);
 sharedditRouter.get('/editor/*', parseQueryString);
 
 // Export the base-router
