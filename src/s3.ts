@@ -23,7 +23,7 @@ export const getImage = async (imageID: string) => {
 };
 
 export const generateUploadURL = async (type: string) => {
-  const imageName = `${uuid.v4()}.${type}`;
+  const imageName = `images/${uuid.v4()}.${type}`;
 
   const params = {
     Bucket: bucketName,
