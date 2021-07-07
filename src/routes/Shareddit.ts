@@ -38,7 +38,7 @@ export const getImageUploadURL = async (req: Request, res: Response) => {
 
 export const parseQueryString = async (req: Request, res: Response) => {
   try {
-    const query = req.path.substr(8, req.path.length);
+    const query = req.path.substr(10, req.path.length);
     const params = queryString.parse(query);
     const generationParams: SkeletonRedditSubmission = await validateParams(
       params
