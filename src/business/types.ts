@@ -17,7 +17,6 @@ export interface RedditComment {
   date: number;
   bodyHTML: string;
   awards: Award[];
-  color: string | null;
   child?: RedditComment;
   parentID: string;
 }
@@ -37,11 +36,23 @@ export interface FleshedRedditSubmission extends SkeletonRedditSubmission {
   bodyHTML: string | null;
   awards: Award[];
   title: string;
+  thumbnail: string | string[] | null;
   link: string | null;
   comments?: RedditComment;
   commentsCount: number;
   type: SubmissionType;
-  color: string | null;
 }
 
 export type SubmissionType = 'image' | 'link' | 'text' | 'album' | 'video';
+
+export interface MediaMetadataEntry {
+  s: {
+    x: number;
+    y: number;
+    u: string;
+  };
+}
+
+export interface MediaMetadata {
+  [key: string]: MediaMetadataEntry;
+}

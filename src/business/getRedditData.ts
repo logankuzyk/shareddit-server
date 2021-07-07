@@ -1,12 +1,16 @@
 import Reddit from 'snoowrap';
-import uniqolor from 'uniqolor';
 
 import {
   SkeletonRedditSubmission,
   FleshedRedditSubmission,
   RedditComment,
 } from './types';
-import { determinePostType, longTime, prettyScore, buildAwards } from './util';
+import {
+  determinePostType,
+  prettyScore,
+  buildAwards,
+  extractAlbumImages,
+} from './util';
 import { login } from './getCredentials';
 
 const dotenv = require('dotenv').config();
@@ -29,7 +33,6 @@ const buildCommentChain = async (
     parentID: await comment.parent_id,
     //@ts-ignore
     awards: buildAwards(await comment.all_awardings),
-    color: redact ? uniqolor(await comment.author.name).color : null,
     child: child ? child : undefined,
   };
   if (!output.parentID.startsWith('t1')) {
@@ -46,30 +49,59 @@ const postInfo = async (
   redact: boolean
 ): Promise<FleshedRedditSubmission> => {
   const post = r.getSubmission(postID);
-  const type = await determinePostType(
-    await post.url,
-    await post.is_video,
-    await post.is_self
-  );
-  const link =
-    type === 'image' || type === 'text'
-      ? await post.url
-      : await post.preview.images[0].source.url;
+
+  const score = await post.score;
+  const name = await post.author.name;
+  const title = await post.title;
+  const created_utc = await post.created_utc;
+  const num_comments = await post.num_comments;
+  //@ts-ignore
+  const all_awardings = await post.all_awardings;
+  const selftext_html = await post.selftext_html;
+  const url = await post.url;
+  const is_video = await post.is_video;
+  const is_self = await post.is_self;
+  const preview = await post.preview;
+  //@ts-ignore
+  const media_metadata = await post.media_metadata;
+
+  const type = await determinePostType(url, is_video, is_self);
+
+  let thumbnail = null;
+  let link = url;
+  switch (type) {
+    case 'image':
+      thumbnail = url;
+      break;
+    case 'video':
+      link = 'https://v.redd.it';
+      thumbnail = preview.images[0].source.url;
+      break;
+    case 'album':
+      thumbnail = await extractAlbumImages(media_metadata);
+      break;
+    case 'text':
+      break;
+    case 'link':
+      thumbnail = preview.images[0].source.url;
+      break;
+  }
+
   const output: FleshedRedditSubmission = {
-    score: await prettyScore(await post.score),
-    author: await post.author.name,
+    score: await prettyScore(score),
+    author: name,
     link: link,
-    title: await post.title,
-    date: Number(String(await post.created_utc) + '000'),
-    commentsCount: await post.num_comments,
+    title: title,
+    date: Number(String(created_utc) + '000'),
+    commentsCount: num_comments,
     //@ts-ignore
-    awards: buildAwards(await post.all_awardings),
-    bodyHTML: await post.selftext_html,
+    awards: await buildAwards(all_awardings),
+    bodyHTML: selftext_html,
     type: type,
     sub: sub,
     postID: postID,
     redact: redact,
-    color: redact ? uniqolor(await post.author.name).color : null,
+    thumbnail: thumbnail,
   };
 
   return output;
