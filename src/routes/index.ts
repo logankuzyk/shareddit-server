@@ -15,7 +15,7 @@ sharedditRouter.get(
   redirectRedditPath
 );
 sharedditRouter.get('/getUploadURL/*', getImageUploadURL);
-sharedditRouter.get('/editor/*', parseQueryString);
+sharedditRouter.get('/generate/*', parseQueryString);
 
 // Export the base-router
 const baseRouter = Router();
