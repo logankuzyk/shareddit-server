@@ -3,10 +3,10 @@ import queryString from 'query-string';
 
 import getRedditData from '../business/getRedditData';
 import { SkeletonRedditSubmission } from '../business/types';
-import { ParamsDictionary } from 'express-serve-static-core';
+import { generateUploadURL } from '../s3';
 
 const validateParams = async (
-  params: ParamsDictionary | queryString.ParsedQuery<any>
+  params: queryString.ParsedQuery<any>
 ): Promise<SkeletonRedditSubmission> => {
   const output: SkeletonRedditSubmission = {
     sub: params.sub,
@@ -19,9 +19,26 @@ const validateParams = async (
   return output;
 };
 
+export const notFound = async (req: Request, res: Response) => {
+  return res.status(404);
+};
+
+export const getImageUploadURL = async (req: Request, res: Response) => {
+  const query = req.path.substr(14, req.path.length);
+  const params = queryString.parse(query);
+  let type = params.type;
+  if (!type) {
+    return res.send(400);
+  } else if (Array.isArray(type)) {
+    type = type[0];
+  }
+  const uploadURL = await generateUploadURL(type);
+  return res.send({ uploadURL });
+};
+
 export const parseQueryString = async (req: Request, res: Response) => {
   try {
-    const query = req.path.substr(1, req.path.length);
+    const query = req.path.substr(8, req.path.length);
     const params = queryString.parse(query);
     const generationParams: SkeletonRedditSubmission = await validateParams(
       params
@@ -44,7 +61,7 @@ export const redirectRedditPath = async (req: Request, res: Response) => {
 
     const query = queryString.stringify(params, { skipNull: true });
 
-    return res.redirect(`/${query}`);
+    return res.redirect(`/editor/${query}`);
   } catch (err) {
     console.error(err);
     return res.status(500).send({

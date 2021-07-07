@@ -1,4 +1,4 @@
-import { Award, SubmissionType } from './types';
+import { Award, SubmissionType, MediaMetadata } from './types';
 
 export const determinePostType = async (
   link: string,
@@ -29,39 +29,6 @@ export const determinePostType = async (
   return type;
 };
 
-// Turns current UTC epoch time into a readable format, the same shown on reddit comments.
-export const longTime = async (utc: number): Promise<string> => {
-  let date = new Date();
-  let delta = date.getTime() / 1000 - utc;
-  if (Math.floor(delta / 60) < 1) {
-    return 'just now';
-  } else if (Math.floor(delta / 60) < 60) {
-    if (Math.floor(delta / 60) == 1) {
-      return '1 minute ago';
-    } else {
-      return Math.floor(delta / 60) + ' minutes ago';
-    }
-  } else if (Math.floor(delta / 3600) < 24) {
-    if (Math.floor(delta / 3600) == 1) {
-      return '1 hour ago';
-    } else {
-      return Math.floor(delta / 3600) + ' hours ago';
-    }
-  } else if (Math.floor(delta / 86400) < 365) {
-    if (Math.floor(delta / 86400) == 1) {
-      return '1 day ago';
-    } else {
-      return Math.floor(delta / 86400) + ' days ago';
-    }
-  } else {
-    if (Math.floor(delta / 31536000) == 1) {
-      return '1 year ago';
-    } else {
-      return Math.floor(delta / 31536000) + ' years ago';
-    }
-  }
-};
-
 export const prettyScore = async (score: number): Promise<string> => {
   let output: string = score.toString();
   if (Number(score) >= 10000) {
@@ -73,7 +40,7 @@ export const prettyScore = async (score: number): Promise<string> => {
   return output;
 };
 
-export const buildAwards = (all_awardings: Award[]) => {
+export const buildAwards = async (all_awardings: Award[]) => {
   let output = [];
   for (let award of all_awardings) {
     output.push({
@@ -83,4 +50,18 @@ export const buildAwards = (all_awardings: Award[]) => {
     });
   }
   return output;
+};
+
+export const extractAlbumImages = async (
+  media_metadata: MediaMetadata
+): Promise<string[]> => {
+  const output: string[] = [];
+  for (let entry of Object.values(media_metadata)) {
+    output.push(entry.s.u);
+  }
+  if (output.length === 0) {
+    return [''];
+  } else {
+    return output;
+  }
 };
