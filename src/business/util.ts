@@ -56,6 +56,9 @@ export const extractAlbumImages = async (
   media_metadata: MediaMetadata
 ): Promise<string[]> => {
   const output: string[] = [];
+  if (media_metadata === null || media_metadata === undefined) {
+    return [''];
+  }
   for (let entry of Object.values(media_metadata)) {
     output.push(entry.s.u);
   }
