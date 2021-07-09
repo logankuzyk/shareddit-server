@@ -32,7 +32,7 @@ const buildCommentChain = async (
     date: Number(String(await comment.created_utc) + '000'),
     parentID: await comment.parent_id,
     //@ts-ignore
-    awards: buildAwards(await comment.all_awardings),
+    awards: await buildAwards(await comment.all_awardings),
     child: child ? child : undefined,
   };
   if (!output.parentID.startsWith('t1')) {
