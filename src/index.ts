@@ -9,7 +9,7 @@ import * as corsProxy from './corsProxy';
 const dotenv = require('dotenv').config();
 
 // Start the server
-const port = Number(80);
+const port = Number(4000);
 http.createServer(app).listen(port);
 https
   .createServer(
@@ -23,6 +23,6 @@ https
     },
     app
   )
-  .listen(443);
+  .listen(5000);
 
 corsProxy.start();

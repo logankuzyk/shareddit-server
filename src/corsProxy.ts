@@ -29,5 +29,5 @@ export function start(): void {
         ),
       },
     })
-    .listen(8080, '0.0.0.0', console.log('CORS Anywhere started'));
+    .listen(6000, '0.0.0.0', console.log('CORS Anywhere started'));
 }
