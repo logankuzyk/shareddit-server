@@ -1,1 +1,0 @@
-docker run -d -it -p 80:80 -p 443:443 -p 8080:8080 --name=shareddit shareddit-server
