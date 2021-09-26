@@ -20,14 +20,6 @@ export function start(): void {
       httpProxyOptions: {
         xfwd: true,
       },
-      httpsOptions: {
-        key: fs.readFileSync(
-          '/etc/letsencrypt/live/server.shareddit.com/privkey.pem'
-        ),
-        cert: fs.readFileSync(
-          '/etc/letsencrypt/live/server.shareddit.com/fullchain.pem'
-        ),
-      },
     })
     .listen(6000, '0.0.0.0', console.log('CORS Anywhere started'));
 }

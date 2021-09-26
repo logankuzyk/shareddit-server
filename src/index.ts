@@ -11,18 +11,5 @@ const dotenv = require('dotenv').config();
 // Start the server
 const port = Number(4000);
 http.createServer(app).listen(port);
-https
-  .createServer(
-    {
-      key: fs.readFileSync(
-        '/etc/letsencrypt/live/server.shareddit.com/privkey.pem'
-      ),
-      cert: fs.readFileSync(
-        '/etc/letsencrypt/live/server.shareddit.com/fullchain.pem'
-      ),
-    },
-    app
-  )
-  .listen(5000);
 
 corsProxy.start();
