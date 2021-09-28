@@ -19,9 +19,6 @@ const dotenv = require('dotenv').config();
  ***********************************************************************************/
 
 app.enable('trust proxy');
-app.use((req, res, next) => {
-  req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
-});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
