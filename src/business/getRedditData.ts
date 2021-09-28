@@ -75,7 +75,9 @@ const postInfo = async (
       break;
     case 'video':
       link = 'https://v.redd.it';
-      thumbnail = preview.images[0].source.url;
+      if (preview.images[0].source.url) {
+        thumbnail = preview.images[0].source.url;
+      }
       break;
     case 'album':
       thumbnail = await extractAlbumImages(media_metadata);
@@ -83,7 +85,9 @@ const postInfo = async (
     case 'text':
       break;
     case 'link':
-      thumbnail = preview.images[0].source.url;
+      if (preview.images[0].source.url) {
+        thumbnail = preview.images[0].source.url;
+      }
       break;
   }
 
