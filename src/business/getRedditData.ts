@@ -75,7 +75,7 @@ const postInfo = async (
       break;
     case 'video':
       link = 'https://v.redd.it';
-      if (preview.images[0].source.url) {
+      if (preview && preview.images[0].source.url) {
         thumbnail = preview.images[0].source.url;
       }
       break;
@@ -85,7 +85,7 @@ const postInfo = async (
     case 'text':
       break;
     case 'link':
-      if (preview.images[0].source.url) {
+      if (preview && preview.images[0].source.url) {
         thumbnail = preview.images[0].source.url;
       }
       break;
