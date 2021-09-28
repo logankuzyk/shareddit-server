@@ -41,20 +41,3 @@ export const parseQueryString = async (req: Request, res: Response) => {
     });
   }
 };
-
-export const redirectRedditPath = async (req: Request, res: Response) => {
-  try {
-    const { params } = req;
-
-    const query = queryString.stringify(params, { skipNull: true });
-
-    return res.redirect(`/editor/${query}`);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send({
-      status: 'error',
-      //@ts-ignore
-      message: err.message,
-    });
-  }
-};
