@@ -20,7 +20,7 @@ const dotenv = require('dotenv').config();
 
 app.enable('trust proxy');
 app.use((req, res, next) => {
-	req.secure ? next() : res.redirect('https://' + req.headers.host + req.url)
+  req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,15 +43,6 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'production') {
   app.use(helmet());
 }
-
-app.get(
-  '/.well-known/acme-challenge/yaO7HtPEo2yuoAKNAi3_wxoWd6BdyrBOCe4aalEGm0g',
-  (req, res) => {
-    res.send(
-      'yaO7HtPEo2yuoAKNAi3_wxoWd6BdyrBOCe4aalEGm0g.qDPViy8jdWwTTyV9oQsxXMi7WayMwum5IyUwyGXVNBw'
-    );
-  }
-);
 
 // Add APIs
 app.use('/', BaseRouter);
