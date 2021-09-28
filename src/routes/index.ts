@@ -1,10 +1,5 @@
 import { Router } from 'express';
-import {
-  redirectRedditPath,
-  parseQueryString,
-  notFound,
-  getImageUploadURL,
-} from './Shareddit';
+import { redirectRedditPath, parseQueryString, notFound } from './Shareddit';
 
 const sharedditRouter = Router();
 

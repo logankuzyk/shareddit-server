@@ -1,6 +1,5 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import path from 'path';
 import helmet from 'helmet';
 
 import express, { NextFunction, Request, Response } from 'express';
@@ -12,7 +11,7 @@ import logger from '@shared/Logger';
 
 const app = express();
 const { BAD_REQUEST } = StatusCodes;
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 /************************************************************************************
  *                              Set basic express settings

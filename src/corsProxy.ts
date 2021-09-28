@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 const corsProxy = require('cors-anywhere');
 
 export function start(): void {
