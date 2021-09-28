@@ -3,7 +3,6 @@ import queryString from 'query-string';
 
 import getRedditData from '../business/getRedditData';
 import { SkeletonRedditSubmission } from '../business/types';
-import { generateUploadURL } from '../s3';
 
 const validateParams = async (
   params: queryString.ParsedQuery<any>
@@ -21,19 +20,6 @@ const validateParams = async (
 
 export const notFound = async (req: Request, res: Response) => {
   return res.status(404);
-};
-
-export const getImageUploadURL = async (req: Request, res: Response) => {
-  const query = req.path.substr(14, req.path.length);
-  const params = queryString.parse(query);
-  let type = params.type;
-  if (!type) {
-    return res.send(400);
-  } else if (Array.isArray(type)) {
-    type = type[0];
-  }
-  const uploadURL = await generateUploadURL(type);
-  return res.send({ uploadURL });
 };
 
 export const parseQueryString = async (req: Request, res: Response) => {

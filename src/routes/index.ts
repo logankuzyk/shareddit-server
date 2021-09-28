@@ -14,7 +14,6 @@ sharedditRouter.get(
   '/r/:sub/comments/:postID/:title/:commentID',
   redirectRedditPath
 );
-sharedditRouter.get('/getUploadURL/*', getImageUploadURL);
 sharedditRouter.get('/generate/*', parseQueryString);
 
 // Export the base-router
