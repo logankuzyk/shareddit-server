@@ -36,6 +36,7 @@ export const parseQueryString = async (req: Request, res: Response) => {
     console.error(err);
     return res.status(500).send({
       status: 'error',
+      //@ts-ignore
       message: err.message,
     });
   }
@@ -52,6 +53,7 @@ export const redirectRedditPath = async (req: Request, res: Response) => {
     console.error(err);
     return res.status(500).send({
       status: 'error',
+      //@ts-ignore
       message: err.message,
     });
   }
