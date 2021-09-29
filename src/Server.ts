@@ -37,6 +37,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Security
 if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('tiny'));
   app.use(helmet());
 }
 
